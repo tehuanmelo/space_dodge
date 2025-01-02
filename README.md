@@ -1,6 +1,6 @@
 # Space Dodge
 
-![Gameplay](assets/demo-video/demo-video.gif.gif)
+![Gameplay](assets/demo-video/demo-video.gif)
 
 ## Description
 `Space Dodge` is a simple game where the player must dodge falling stars. The game is built using Pygame and features a player-controlled character that moves left and right to avoid the stars.
