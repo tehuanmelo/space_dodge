@@ -13,18 +13,29 @@ BG = pygame.transform.scale(BG_ORIGIN, (WIDTH, HEIGHT))
 PLAYER_WIDTH, PLAYER_HEIGHT = 40, 40
 PLAYER_SPEED = 5
 
-def draw(player):
+
+    
+def draw(player, font):
     WIN.blit(BG, (0,0)) 
     pygame.draw.rect(WIN, 'orange', player)
-     
+    
+    current_time = pygame.time.get_ticks() // 1000
+    font_surf = font.render(f"Time: {current_time:3}", True, "white")
+    font_rect = font_surf.get_rect(topleft=(10,10))
+    WIN.blit(font_surf, font_rect)
+    
     pygame.display.update()
 
 
 def main():
+    pygame.init()
     clock = pygame.time.Clock()
     
     player = pygame.Rect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
     player.midbottom = player.midbottom = (WIDTH/2, HEIGHT)
+    
+    font = pygame.font.Font(join("assets/fonts/chopsic", "Chopsic.otf"), 40)
+    
     
     running = True
     while running:
@@ -40,7 +51,9 @@ def main():
         if keys[pygame.K_LEFT] and player.x > 0:
             player.x -= PLAYER_SPEED
                 
-        draw(player)
+        draw(player, font)
+        
+        
         
     pygame.quit()
 
