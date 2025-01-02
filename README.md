@@ -31,11 +31,9 @@ python main.py
 - **Escape Key**: Quit the game.
 
 ## Game Mechanics
-- The player must dodge falling stars.
+- The player must dodge falling lasers.
 - The game displays the elapsed time.
-- If the player is hit by a star, the game displays "You lost" and restarts after a delay.
+- If the player is hit by a laser, the game displays "You lost" and restarts after a delay.
 
-## Assets
-- **Images**: Place your background image in the `assets/images` directory.
-- **Fonts**: Place your custom font in the `assets/fonts` directory.
+
 
