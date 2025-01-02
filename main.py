@@ -20,7 +20,8 @@ STAR_WIDTH, STAR_HEIGHT, STAR_SPEED = 10, 20, 5
 class Player(pygame.sprite.Sprite):
     def __init__(self, groups):
         super().__init__(groups)
-        self.image = pygame.image.load(join("assets/images", "spaceship.png"))
+        self.original_image = pygame.image.load(join("assets/images", "rocket.png"))
+        self.image = pygame.transform.scale(self.original_image, (self.original_image.get_width() // 4, self.original_image.get_height() // 5))
         self.rect = self.image.get_frect(midbottom=(WINDOW_WIDTH/2, WINDOW_HEIGHT))
         self.mask = pygame.mask.from_surface(self.image)
         self.speed = 5
@@ -35,38 +36,28 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= self.speed
         
 
-class Star(pygame.sprite.Sprite):
+class Missile(pygame.sprite.Sprite):
     def __init__(self, groups, pos):
         super().__init__(groups)
-        self.width = 10
-        self.height = 20
-        self.image = pygame.Surface((self.width, self.height)).convert_alpha()
-        self.rect = self.image(midbottom=pos)
+        self.original_image = pygame.image.load(join("assets/images", "missile.png"))
+        self.image = pygame.transform.rotate(self.original_image, 180)  # Rotate the scaled image by 180 degrees
+        self.rect = self.image.get_rect(midbottom=pos)
         self.mask = pygame.mask.from_surface(self.image)
-        self.direction = pygame.Vector2(0,1)
         self.speed = 5
         
     def update(self):
-        self.rect.center += self.direction * self.speed
+        self.rect.bottom += self.speed
         if self.rect.bottom == WINDOW_HEIGHT - 100:
             self.kill()
-
-    
-# def draw(start_time, player, self.rect, font, stars):
-#     WIN.blit(BG, (0,0)) 
-    
-#     for star in stars:
-#         WIN.blit()
+            
         
-#     # pygame.draw.rect(WIN, 'orange', player)
-#     WIN.blit(player, self.rect)
-    
-#     current_time = (pygame.time.get_ticks() - start_time) // 1000
-#     font_surf = font.render(f"Time: {current_time:3}", True, "white")
-#     font_rect = font_surf.get_rect(topleft=(10,10))
-#     WIN.blit(font_surf, font_rect)
-    
-#     pygame.display.update()
+def timer_display(start_time):
+    font = pygame.font.Font(join("assets/fonts", "chopsic.otf"), 40)
+    current_time = (pygame.time.get_ticks() - start_time) // 1000
+    font_surf = font.render(f"Time: {current_time:3}", True, "white")
+    font_rect = font_surf.get_rect(topleft=(10,10))
+    WIN.blit(font_surf, font_rect)
+
 
 
 def game():
@@ -78,6 +69,7 @@ def game():
     
     all_sprites = pygame.sprite.Group()
     player = Player(all_sprites)
+    star = Missile(all_sprites, (WINDOW_HEIGHT/2, 0))
     
     # game_music = pygame.mixer.Sound(join("assets/audio", "mountainclimbing.wav"))
     # game_music.play(loops=-1)
@@ -139,8 +131,13 @@ def game():
                 
         # draw(start_time, player, self.rect, custom_font, stars)
         all_sprites.update()
+        
         WIN.blit(BG, (0,0))
+        
+        timer_display(start_time)
+        
         all_sprites.draw(WIN)
+        
         pygame.display.update()
         
     return running
