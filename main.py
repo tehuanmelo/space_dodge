@@ -12,7 +12,7 @@ pygame.display.set_caption("Space Dodge")
 BG_ORIGIN = pygame.image.load(join("assets/images", "bg.jpeg"))
 BG = pygame.transform.scale(BG_ORIGIN, (WIDTH, HEIGHT))
 
-PLAYER_WIDTH, PLAYER_HEIGHT = 40, 40
+PLAYER_WIDTH, PLAYER_HEIGHT = 40, 60
 PLAYER_SPEED = 5
 
 
@@ -44,7 +44,7 @@ def game():
     player = pygame.Rect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
     player.midbottom = player.midbottom = (WIDTH/2, HEIGHT)
     
-    custom_font = pygame.font.Font(join("assets/fonts/chopsic", "Chopsic.otf"), 40)
+    custom_font = pygame.font.Font(join("assets/fonts", "chopsic.otf"), 40)
     
     star_timer_cooldown = 2000
     star_timer_creation = 0
