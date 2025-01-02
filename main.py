@@ -23,7 +23,8 @@ def draw(player):
 def main():
     clock = pygame.time.Clock()
     
-    player = pygame.Rect(WIDTH/2-PLAYER_WIDTH/2, HEIGHT-PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
+    player = pygame.Rect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
+    player.midbottom = player.midbottom = (WIDTH/2, HEIGHT)
     
     running = True
     while running:
@@ -34,14 +35,10 @@ def main():
                 break
             
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_RIGHT]:
-            x = player.x + PLAYER_SPEED
-            if x < WIDTH - PLAYER_WIDTH:
-                player.x += PLAYER_SPEED
-        if keys[pygame.K_LEFT]:
-            x = player.x - PLAYER_SPEED
-            if x > 0:
-                player.x -= PLAYER_SPEED
+        if keys[pygame.K_RIGHT] and player.x + PLAYER_WIDTH + PLAYER_SPEED < WIDTH:
+            player.x += PLAYER_SPEED
+        if keys[pygame.K_LEFT] and player.x > 0:
+            player.x -= PLAYER_SPEED
                 
         draw(player)
         
